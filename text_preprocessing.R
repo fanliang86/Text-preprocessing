@@ -7,14 +7,15 @@ library(tm) #package for text mining
 library(stringr)
 
 ################################################################
-## Load the dataset
-### This example will use 100 Facebook posts as example for text preprocessing. 
-### The dataset has two column: one is Facebok posts (Message), while another is content topic. 
+# Step 1: Load the dataset
+## This example will use 100 Facebook posts as example for text preprocessing. 
+## The dataset has two column: one is Facebok posts (Message), while another is content topic. 
 data <- read.csv(file="Github/Text preprocessing_example.csv", header=T)
 data$Message[1:3] #check the posts. 
 ### We can see these posts often contain lots of words and other characters like urls. Before we conduct content analysis, we need to simplify these texts.
 
-# Next, we need to transform the text file into a corpus for preprocessing
+#Step 2: transform textual data into a corpus
+## Next, we need to transform the text file into a corpus for preprocessing
 corpus <- Corpus(VectorSource(data$Message)) #make sure your put the text feature in 'Corpus' function (use 'data$Message' instead of 'data')
 
 # The main idea of text preprocessing is to simplify our textual for further analysis. In principle, there have several steps for preprocessing including remove stopwords, lowercasing, remove numbers and Punctuation. 
@@ -28,22 +29,17 @@ corpus <- tm_map(corpus,  content_transformer(tolower)) #Lowercase
 
 
 # Usually social media posts contain urls, mentions '@', hashtags and other special characters. Thus, we also need to remove these content. To do so, we can define several functions:
-removeURL <- function(x) { gsub('http\\S+\\s*',"" , x) } 
-removeMentions <- function(x) { gsub("@\\w+", "", x) }
-removeHashTags  <- function(x) { gsub('#\\S+', "", x) }
-removeControl <- function(x) { gsub('[[:cntrl:]]', "", x) }
-removeRT <- function(x) { gsub('\\b+RT', "", x) }
+removeURL <- function(x) { gsub('http\\S+\\s*',"" , x) } #Removing urls
+removeMentions <- function(x) { gsub("@\\w+", "", x) } #Removing mentions
+removeHashTags  <- function(x) { gsub('#\\S+', "", x) } #Removing hashtags
+removeRT <- function(x) { gsub('\\b+RT', "", x) } #\#Removing RT in tweets
 
-corpus <- tm_map(corpus,removeURL) #Removing urls
-corpus <- tm_map(corpus,removeMentions) #Removing mentions
-corpus <- tm_map(corpus,removeHashTags) #Removing hashtags
-corpus <- tm_map(corpus,removeRT) ##Removing RT in tweets
-
+# Apply these functions to the corpus:
 corpus <- tm_map(corpus,removeURL) 
 corpus <- tm_map(corpus,removeMentions) 
 corpus <- tm_map(corpus,removeHashTags) 
 corpus <- tm_map(corpus,removeControl) 
-corpus <- tm_map(corpus,removeRT)  #apply these functions to the corpus
+corpus <- tm_map(corpus,removeRT)  
 
 # Now we can remove other characters:
 corpus <- tm_map(corpus, content_transformer(removePunctuation)) #Removing Punctuation
