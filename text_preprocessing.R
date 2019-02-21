@@ -21,15 +21,13 @@ corpus <- Corpus(VectorSource(data$Message)) #make sure your put the text featur
 # It is important to remember that the order and choice of these steps will influence your final textual datase. See: Denny, M. J., & Spirling, A. (2018). Text preprocessing for unsupervised learning: Why it matters, when it misleads, and what to do about it. Political Analysis, 26(2), 168-189.
 
 # These are common steps:
-corpus_clean <- tm_map(corpus, tolower) #convert to lowercase 
-corpus_clean <- tm_map(myCorpus, removeWords, stopwords("english")) #remove stopwords
-stopwords("english") #check stopwords
-corpus_clean <- tm_map(myCorpus, removePunctuation) #remove punctuation
-corpus_clean <- tm_map(myCorpus, removeNumbers) #remove numbers
-corpus_clean <- tm_map(corpus_clean, stemDocument) #stemming
+corpus <- tm_map(corpus, removeWords, stopwords("english")) #Removing Stopwords
+corpus <- tm_map(corpus, content_transformer(removeNumbers)) #Removing Numbers
+corpus <- tm_map(corpus,  content_transformer(tolower)) #Lowercase
+## Note: if your text file has urls, mentions@, and hashtags#, then it is a good idea to remove these characters before removing Punctuation. Otherwise, these special characters may not be removed from your corpus and will influence your analysis.
 
 
-# Usually social media posts contain urls, mentions '@', hastags and other special characters. Thus, we also need to remove these content. To do so, we can define a function:
+# Usually social media posts contain urls, mentions '@', hashtags and other special characters. Thus, we also need to remove these content. To do so, we can define a function:
 Preprocess_posts <- function(X) {
   gsub("(RT|via)((?:\\b\\W*@\\w+)+)", "", X)
   gsub("http\\w+", "", X)
