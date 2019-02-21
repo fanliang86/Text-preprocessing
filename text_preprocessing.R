@@ -4,7 +4,7 @@
 ### Install packages
 rm(list=ls()) #clearing workspace
 library(tm) #package for text mining
-library(stringr)
+library(stringr) #
 
 ################################################################
 # Step 1: Load the dataset
@@ -22,14 +22,14 @@ corpus <- Corpus(VectorSource(data$Message)) #make sure your put the text featur
 ## The main idea of text preprocessing is to simplify our textual for further analysis. In principle, there have several steps for preprocessing including remove stopwords, lowercasing, remove numbers and Punctuation. 
 # It is important to remember that the order and choice of these steps will influence your final textual datase. See: Denny, M. J., & Spirling, A. (2018). Text preprocessing for unsupervised learning: Why it matters, when it misleads, and what to do about it. Political Analysis, 26(2), 168-189.
 
-## These are common steps:
+## 3.1. These are common steps:
 corpus <- tm_map(corpus, removeWords, stopwords("english")) #Removing Stopwords
 corpus <- tm_map(corpus, content_transformer(removeNumbers)) #Removing Numbers
 corpus <- tm_map(corpus,  content_transformer(tolower)) #Lowercase
 ## Note: if your text file has urls, mentions@, and hashtags#, then it is a good idea to remove these characters before removing Punctuation. Otherwise, these special characters may not be removed from your corpus and will influence your analysis.
 
 
-## Usually social media posts contain urls, mentions '@', hashtags and other special characters. Thus, we also need to remove these content. To do so, we can define several functions:
+## 3.2. Usually social media posts contain urls, mentions '@', hashtags and other special characters. Thus, we also need to remove these content. To do so, we can define several functions:
 removeURL <- function(x) { gsub('http\\S+\\s*',"" , x) } #Removing urls
 removeMentions <- function(x) { gsub("@\\w+", "", x) } #Removing mentions
 removeHashTags  <- function(x) { gsub('#\\S+', "", x) } #Removing hashtags
@@ -42,7 +42,7 @@ corpus <- tm_map(corpus,removeHashTags)
 corpus <- tm_map(corpus,removeControl) 
 corpus <- tm_map(corpus,removeRT)  
 
-## Now we can remove other characters:
+## 3.3. Now we can remove other characters:
 corpus <- tm_map(corpus, content_transformer(removePunctuation)) #Removing Punctuation
 corpus <- tm_map(corpus, content_transformer(stripWhitespace)) #Removing whitespaces
 corpus<- tm_map(corpus, content_transformer(stemDocument), language="english") #Stemming
@@ -52,4 +52,4 @@ corpus<- tm_map(corpus, content_transformer(stemDocument), language="english") #
 data$Message[[5]]
 as.character(corpus_clean[[5]])
 
-# If the results are not good, we can change the steps of preprocessing or add more steps. 
+# If the results are not good, we can change the order of thesteps or add more steps. 
