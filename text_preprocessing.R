@@ -28,6 +28,12 @@ corpus <- tm_map(corpus,  content_transformer(tolower)) #Lowercase
 
 
 # Usually social media posts contain urls, mentions '@', hashtags and other special characters. Thus, we also need to remove these content. To do so, we can define several functions:
+removeURL <- function(x) { gsub('http\\S+\\s*',"" , x) } 
+removeMentions <- function(x) { gsub("@\\w+", "", x) }
+removeHashTags  <- function(x) { gsub('#\\S+', "", x) }
+removeControl <- function(x) { gsub('[[:cntrl:]]', "", x) }
+removeRT <- function(x) { gsub('\\b+RT', "", x) }
+
 corpus <- tm_map(corpus,removeURL) #Removing urls
 corpus <- tm_map(corpus,removeMentions) #Removing mentions
 corpus <- tm_map(corpus,removeHashTags) #Removing hashtags
@@ -39,7 +45,10 @@ corpus <- tm_map(corpus,removeHashTags)
 corpus <- tm_map(corpus,removeControl) 
 corpus <- tm_map(corpus,removeRT)  #apply these functions to the corpus
 
-
+# Now we can remove other characters:
+corpus <- tm_map(corpus, content_transformer(removePunctuation)) #Removing Punctuation
+corpus <- tm_map(corpus, content_transformer(stripWhitespace)) #Removing whitespaces
+corpus<- tm_map(corpus, content_transformer(stemDocument), language="english") #Stemming
 
 
 #Finally let's check the result by comparing the original texts with the preprocess texts
