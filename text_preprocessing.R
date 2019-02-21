@@ -27,24 +27,20 @@ corpus <- tm_map(corpus,  content_transformer(tolower)) #Lowercase
 ## Note: if your text file has urls, mentions@, and hashtags#, then it is a good idea to remove these characters before removing Punctuation. Otherwise, these special characters may not be removed from your corpus and will influence your analysis.
 
 
-# Usually social media posts contain urls, mentions '@', hashtags and other special characters. Thus, we also need to remove these content. To do so, we can define a function:
-Preprocess_posts <- function(X) {
-  gsub("(RT|via)((?:\\b\\W*@\\w+)+)", "", X)
-  gsub("http\\w+", "", X)
-  gsub("http:", "", X) 
-  gsub("http[[:alnum:]]*", "", X)
-  gsub("[ \t]{2,}", "", X)
-  gsub("^\\s+|\\s+$", "", X)
-  gsub('[[:cntrl:]]', '', X) 
-  gsub("@\\w+", "", X) 
-  gsub('#\\S+', '', X)
-  sub("\\s*\\B#\\w+(?:\\s*#\\w+)*\\s*$", "", X) 
-  gsub('\\b+RT', '', X) 
-  gsub(' +',' ', X) 
-  gsub(" ?(f|ht)tp(s?)://(.*)[.][a-z]+", "", X)
-}
+# Usually social media posts contain urls, mentions '@', hashtags and other special characters. Thus, we also need to remove these content. To do so, we can define several functions:
+corpus <- tm_map(corpus,removeURL) #Removing urls
+corpus <- tm_map(corpus,removeMentions) #Removing mentions
+corpus <- tm_map(corpus,removeHashTags) #Removing hashtags
+corpus <- tm_map(corpus,removeRT) ##Removing RT in tweets
 
-corpus_clean <- tm_map(corpus_clean, Preprocess_posts) #apply the function to our corpus
+corpus <- tm_map(corpus,removeURL) 
+corpus <- tm_map(corpus,removeMentions) 
+corpus <- tm_map(corpus,removeHashTags) 
+corpus <- tm_map(corpus,removeControl) 
+corpus <- tm_map(corpus,removeRT)  #apply these functions to the corpus
+
+
+
 
 #Finally let's check the result by comparing the original texts with the preprocess texts
 data$Message[[5]]
