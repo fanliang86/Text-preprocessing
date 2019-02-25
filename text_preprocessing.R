@@ -3,7 +3,7 @@
 ################################################################
 
 rm(list=ls()) #clear workspace
-getwd() #check working dictionery
+getwd() #check working dictionary
 
 ### Load packages
 library(tm) #package for text mining
