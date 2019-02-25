@@ -1,11 +1,14 @@
 ### Text preprocess in R ###
 
 ################################################################
-### Install packages
-rm(list=ls()) #clearing workspace
+
+rm(list=ls()) #clear workspace
+getwd() #check working dictionery
+
+### Load packages
 library(tm) #package for text mining
 library(stringr) #
-getwd()
+
 
 ################################################################
 # Step 1: Load the dataset
