@@ -2,12 +2,12 @@
 
 ################################################################
 
-rm(list=ls()) #clear workspace
-getwd() #check working dictionary
+rm(list=ls()) #Clear workspace
+getwd() #Check working dictionary
 
 ### Load packages
 library(tm) #package for text mining
-library(stringr) #
+library(stringr) #package for stringr
 
 
 ################################################################
