@@ -30,7 +30,7 @@ corpus <- Corpus(VectorSource(data$Message)) #make sure your put the text featur
 corpus <- tm_map(corpus, removeWords, stopwords("english")) #Removing Stopwords
 corpus <- tm_map(corpus, content_transformer(removeNumbers)) #Removing Numbers
 corpus <- tm_map(corpus,  content_transformer(tolower)) #Lowercase
-## Note: if your text file has urls, mentions@, and hashtags#, then it is a good idea to remove these characters before removing Punctuation. Otherwise, these special characters may not be removed from your corpus and will influence your analysis.
+## Note: if the text file has urls, mentions@, and hashtags#, then it is a good idea to remove these characters before removing Punctuation. Otherwise, these special characters may not be removed from the corpus and will influence the final analysis.
 
 
 ## 3.2. Usually social media posts contain urls, mentions '@', hashtags and other special characters. Thus, we also need to remove these content. To do so, we can define several functions:
@@ -54,7 +54,7 @@ corpus<- tm_map(corpus, content_transformer(stemDocument), language="english") #
 # Step 4: check the results
 ## Finally let's check the result by comparing the original texts with the preprocess texts
 data$Message[[5]]
-as.character(corpus_clean[[5]])
+as.character(corpus_clean[[5]]) 
 
 # If the results are not acceptable (e.g., there still have too many words), we can change the order of thesteps and/or add more steps. 
 # If the results are acceptable, then we can convert the corpus to a Document-Term Matrix for quantitative text analysis and text mining.
