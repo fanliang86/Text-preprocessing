@@ -56,5 +56,5 @@ corpus<- tm_map(corpus, content_transformer(stemDocument), language="english") #
 data$Message[[5]]
 as.character(corpus_clean[[5]])
 
-# If the results are not good, we can change the order of thesteps or add more steps. 
+# If the results are not acceptable (e.g., there still have too many words), we can change the order of thesteps and/or add more steps. 
 # If the results are acceptable, then we can convert the corpus to a Document-Term Matrix for quantitative text analysis and text mining.
