@@ -6,9 +6,8 @@ rm(list=ls()) #Clear workspace
 getwd() #Check working dictionary
 
 ### Load packages
-library(tm) #package for text mining
-library(stringr) #package for stringr
-
+library(tm) #package for text mining. See: https://cran.r-project.org/web/packages/tm/tm.pdf
+library(stringr) #package for stringr. See: https://cran.r-project.org/web/packages/stringr/stringr.pdf
 
 ################################################################
 # Step 1: Load the dataset
