@@ -13,7 +13,7 @@ library(stringr) #package for stringr. See: https://cran.r-project.org/web/packa
 # Step 1: Load the dataset
 ## This example will use 100 Facebook posts as example for text preprocessing. Please download the file named 'Text preprocessing_example.csv' and put it in the R working directory. 
 ## The dataset has two column: one is Facebok posts (Message), while another is content topic. 
-data <- read.csv(file="Github/Text preprocessing_example.csv", header=T)
+data <- read.csv(file="Text preprocessing_example.csv", header=T)
 data$Message[1:3] #check the posts. 
 ### We can see these posts often contain lots of words and other characters like urls. Before we conduct content analysis, we need to simplify these texts.
 
